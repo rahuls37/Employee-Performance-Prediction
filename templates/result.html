@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Prediction Result</h1>
-    <p>The predicted value is: {{ prediction }}</p>
-    <a href="{{ url_for('index') }}">Go back</a>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        <nav>
+            <a href="/">Predict</a>
+            <a href="/history">History</a>
+        </nav>
+        <div class="result-card">
+            {% if error %}
+            <div class="error">
+                <h2>Error</h2>
+                <p>{{ error }}</p>
+            </div>
+            {% else %}
+            <div class="success">
+                <h2>Performance Rating Prediction</h2>
+                <p class="prediction">{{ "%.2f"|format(prediction) }}</p>
+            </div>
+            {% endif %}
+            <a href="/" class="back-btn">Make Another Prediction</a>
+        </div>
+    </div>
 </body>
 </html>

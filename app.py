@@ -1,46 +1,77 @@
-from flask import Flask, request, render_template, redirect, url_for
-import pandas as pd
-import joblib
-import os
+from flask import Flask, render_template, request
 from src.pipeline.prediction_pipeline import PredictionPipeline
+import pandas as pd
+import sqlite3
+from datetime import datetime
+import os
 
 app = Flask(__name__)
 
-# Load the model and encoders
-model_path = "artifacts/model_trainer/linear_regression_model.joblib"
-encoders_path = "artifacts/data_transformation/encoders.joblib"
-prediction_pipeline = PredictionPipeline(model_path=model_path, encoders_path=encoders_path)
+# Database initialization function
+def init_db():
+    db_path = 'predictions.db'
+    if not os.path.exists(db_path):
+        conn = sqlite3.connect(db_path)
+        c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS predictions
+                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     timestamp TEXT,
+                     input_data TEXT,
+                     prediction REAL)''')
+        conn.commit()
+        conn.close()
 
-# Ensure the directory for storing previous predictions exists
-os.makedirs("artifacts/predictions", exist_ok=True)
+# Initialize database when app starts
+with app.app_context():
+    init_db()
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if request.method == 'POST':
-        # Get form data
-        input_data = request.form.to_dict()
-        input_df = pd.DataFrame([input_data])
-
+    try:
+        # Get form data and remove EmpNumber
+        form_data = {k: [v] for k, v in request.form.items()}
+        if 'EmpNumber' in form_data:
+            del form_data['EmpNumber']
+            
+        # Create DataFrame
+        input_df = pd.DataFrame(form_data)
+        
+        # Initialize prediction pipeline
+        pipeline = PredictionPipeline(
+            model_path='artifacts/model_trainer/linear_regression_model.joblib',
+            encoders_path='artifacts/data_transformation/encoders.joblib'
+        )
+        
         # Make prediction
-        prediction = prediction_pipeline.predict(input_df)
-
-        # Save the input data and prediction
-        input_df['Prediction'] = prediction
-        input_df.to_csv('artifacts/predictions/predictions.csv', mode='a', header=not os.path.exists('artifacts/predictions/predictions.csv'), index=False)
-
-        return render_template('result.html', prediction=prediction[0])
+        prediction = pipeline.predict(input_df)[0]
+        
+        # Save to database
+        conn = sqlite3.connect('predictions.db')
+        c = conn.cursor()
+        c.execute(
+            "INSERT INTO predictions (timestamp, input_data, prediction) VALUES (?, ?, ?)",
+            (datetime.now().strftime("%Y-%m-%d %H:%M:%S"), str(form_data), float(prediction))
+        )
+        conn.commit()
+        conn.close()
+        
+        return render_template('result.html', prediction=prediction)
+        
+    except Exception as e:
+        return render_template('result.html', error=str(e))
 
 @app.route('/history')
 def history():
-    if os.path.exists('artifacts/predictions/predictions.csv'):
-        history_df = pd.read_csv('artifacts/predictions/predictions.csv')
-        return render_template('history.html', tables=[history_df.to_html(classes='data', header="true")])
-    else:
-        return "No history available."
+    conn = sqlite3.connect('predictions.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM predictions ORDER BY timestamp DESC")
+    predictions = c.fetchall()
+    conn.close()
+    return render_template('history.html', predictions=predictions)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

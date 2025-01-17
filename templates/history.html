@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Prediction History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Prediction History</h1>
-    <div>
-        {{ tables|safe }}
+    <div class="container">
+        <h1>Prediction History</h1>
+        <nav>
+            <a href="/">Predict</a>
+            <a href="/history" class="active">History</a>
+        </nav>
+        <div class="history-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Input Data</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prediction in predictions %}
+                    <tr>
+                        <td>{{ prediction[1] }}</td>
+                        <td>{{ prediction[2] }}</td>
+                        <td>{{ "%.2f"|format(prediction[3]) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <a href="{{ url_for('index') }}">Go back</a>
 </body>
 </html>

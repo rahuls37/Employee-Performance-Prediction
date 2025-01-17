@@ -1,71 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Prediction App</title>
+    <title>Employee Performance Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Employee Performance Prediction</h1>
-    <form action="{{ url_for('predict') }}" method="post">
-        <!-- Add input fields for each feature required by the model -->
-        <label for="EmpNumber">EmpNumber:</label>
-        <input type="text" id="EmpNumber" name="EmpNumber"><br>
-        <label for="Age">Age:</label>
-        <input type="text" id="Age" name="Age"><br>
-        <label for="Gender">Gender:</label>
-        <input type="text" id="Gender" name="Gender"><br>
-        <label for="EducationBackground">EducationBackground:</label>
-        <input type="text" id="EducationBackground" name="EducationBackground"><br>
-        <label for="MaritalStatus">MaritalStatus:</label>
-        <input type="text" id="MaritalStatus" name="MaritalStatus"><br>
-        <label for="EmpDepartment">EmpDepartment:</label>
-        <input type="text" id="EmpDepartment" name="EmpDepartment"><br>
-        <label for="EmpJobRole">EmpJobRole:</label>
-        <input type="text" id="EmpJobRole" name="EmpJobRole"><br>
-        <label for="BusinessTravelFrequency">BusinessTravelFrequency:</label>
-        <input type="text" id="BusinessTravelFrequency" name="BusinessTravelFrequency"><br>
-        <label for="DistanceFromHome">DistanceFromHome:</label>
-        <input type="text" id="DistanceFromHome" name="DistanceFromHome"><br>
-        <label for="EmpEducationLevel">EmpEducationLevel:</label>
-        <input type="text" id="EmpEducationLevel" name="EmpEducationLevel"><br>
-        <label for="EmpEnvironmentSatisfaction">EmpEnvironmentSatisfaction:</label>
-        <input type="text" id="EmpEnvironmentSatisfaction" name="EmpEnvironmentSatisfaction"><br>
-        <label for="EmpHourlyRate">EmpHourlyRate:</label>
-        <input type="text" id="EmpHourlyRate" name="EmpHourlyRate"><br>
-        <label for="EmpJobInvolvement">EmpJobInvolvement:</label>
-        <input type="text" id="EmpJobInvolvement" name="EmpJobInvolvement"><br>
-        <label for="EmpJobLevel">EmpJobLevel:</label>
-        <input type="text" id="EmpJobLevel" name="EmpJobLevel"><br>
-        <label for="EmpJobSatisfaction">EmpJobSatisfaction:</label>
-        <input type="text" id="EmpJobSatisfaction" name="EmpJobSatisfaction"><br>
-        <label for="NumCompaniesWorked">NumCompaniesWorked:</label>
-        <input type="text" id="NumCompaniesWorked" name="NumCompaniesWorked"><br>
-        <label for="OverTime">OverTime:</label>
-        <input type="text" id="OverTime" name="OverTime"><br>
-        <label for="EmpLastSalaryHikePercent">EmpLastSalaryHikePercent:</label>
-        <input type="text" id="EmpLastSalaryHikePercent" name="EmpLastSalaryHikePercent"><br>
-        <label for="EmpRelationshipSatisfaction">EmpRelationshipSatisfaction:</label>
-        <input type="text" id="EmpRelationshipSatisfaction" name="EmpRelationshipSatisfaction"><br>
-        <label for="TotalWorkExperienceInYears">TotalWorkExperienceInYears:</label>
-        <input type="text" id="TotalWorkExperienceInYears" name="TotalWorkExperienceInYears"><br>
-        <label for="TrainingTimesLastYear">TrainingTimesLastYear:</label>
-        <input type="text" id="TrainingTimesLastYear" name="TrainingTimesLastYear"><br>
-        <label for="EmpWorkLifeBalance">EmpWorkLifeBalance:</label>
-        <input type="text" id="EmpWorkLifeBalance" name="EmpWorkLifeBalance"><br>
-        <label for="ExperienceYearsAtThisCompany">ExperienceYearsAtThisCompany:</label>
-        <input type="text" id="ExperienceYearsAtThisCompany" name="ExperienceYearsAtThisCompany"><br>
-        <label for="ExperienceYearsInCurrentRole">ExperienceYearsInCurrentRole:</label>
-        <input type="text" id="ExperienceYearsInCurrentRole" name="ExperienceYearsInCurrentRole"><br>
-        <label for="YearsSinceLastPromotion">YearsSinceLastPromotion:</label>
-        <input type="text" id="YearsSinceLastPromotion" name="YearsSinceLastPromotion"><br>
-        <label for="YearsWithCurrManager">YearsWithCurrManager:</label>
-        <input type="text" id="YearsWithCurrManager" name="YearsWithCurrManager"><br>
-        <label for="Attrition">Attrition:</label>
-        <input type="text" id="Attrition" name="Attrition"><br>
-        <label for="PerformanceRating">PerformanceRating:</label>
-        <input type="text" id="PerformanceRating" name="PerformanceRating"><br>
-        <input type="submit" value="Predict">
-    </form>
-    <a href="{{ url_for('history') }}">View Prediction History</a>
+    <div class="container">
+        <h1>Employee Performance Prediction</h1>
+        <nav>
+            <a href="/" class="active">Predict</a>
+            <a href="/history">History</a>
+        </nav>
+        <form action="/predict" method="post" class="prediction-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="EmpNumber">Employee Number</label>
+                    <input type="text" name="EmpNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="Age">Age</label>
+                    <input type="number" name="Age" required>
+                </div>
+                <div class="form-group">
+                    <label for="Gender">Gender</label>
+                    <select name="Gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="EducationBackground">Education Background</label>
+                    <select name="EducationBackground" required>
+                        <option value="Life Sciences">Life Sciences</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Technical Degree">Technical Degree</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="MaritalStatus">Marital Status</label>
+                    <select name="MaritalStatus" required>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="EmpDepartment">Department</label>
+                    <select name="EmpDepartment" required>
+                        <option value="Sales">Sales</option>
+                        <option value="Development">Development</option>
+                        <option value="Human Resources">Human Resources</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="BusinessTravelFrequency">Business Travel</label>
+                    <select name="BusinessTravelFrequency" required>
+                        <option value="Travel_Rarely">Travel Rarely</option>
+                        <option value="Travel_Frequently">Travel Frequently</option>
+                        <option value="Non-Travel">Non-Travel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="DistanceFromHome">Distance From Home</label>
+                    <input type="number" name="DistanceFromHome" required>
+                </div>
+                <!-- Add remaining numeric fields -->
+                <div class="form-group">
+                    <label for="EmpEducationLevel">Education Level (1-5)</label>
+                    <input type="number" min="1" max="5" name="EmpEducationLevel" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpEnvironmentSatisfaction">Environment Satisfaction (1-4)</label>
+                    <input type="number" min="1" max="4" name="EmpEnvironmentSatisfaction" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpHourlyRate">Hourly Rate</label>
+                    <input type="number" name="EmpHourlyRate" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpJobInvolvement">Job Involvement (1-4)</label>
+                    <input type="number" min="1" max="4" name="EmpJobInvolvement" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpJobLevel">Job Level (1-5)</label>
+                    <input type="number" min="1" max="5" name="EmpJobLevel" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpJobSatisfaction">Job Satisfaction (1-4)</label>
+                    <input type="number" min="1" max="4" name="EmpJobSatisfaction" required>
+                </div>
+                <div class="form-group">
+                    <label for="NumCompaniesWorked">Number of Companies Worked</label>
+                    <input type="number" name="NumCompaniesWorked" required>
+                </div>
+                <div class="form-group">
+                    <label for="OverTime">Overtime</label>
+                    <select name="OverTime" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="EmpLastSalaryHikePercent">Last Salary Hike %</label>
+                    <input type="number" name="EmpLastSalaryHikePercent" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpRelationshipSatisfaction">Relationship Satisfaction (1-4)</label>
+                    <input type="number" min="1" max="4" name="EmpRelationshipSatisfaction" required>
+                </div>
+                <div class="form-group">
+                    <label for="TotalWorkExperienceInYears">Total Work Experience (Years)</label>
+                    <input type="number" name="TotalWorkExperienceInYears" required>
+                </div>
+                <div class="form-group">
+                    <label for="TrainingTimesLastYear">Training Times Last Year</label>
+                    <input type="number" name="TrainingTimesLastYear" required>
+                </div>
+                <div class="form-group">
+                    <label for="EmpWorkLifeBalance">Work Life Balance (1-4)</label>
+                    <input type="number" min="1" max="4" name="EmpWorkLifeBalance" required>
+                </div>
+                <div class="form-group">
+                    <label for="ExperienceYearsAtThisCompany">Years at Company</label>
+                    <input type="number" name="ExperienceYearsAtThisCompany" required>
+                </div>
+                <div class="form-group">
+                    <label for="ExperienceYearsInCurrentRole">Years in Current Role</label>
+                    <input type="number" name="ExperienceYearsInCurrentRole" required>
+                </div>
+                <div class="form-group">
+                    <label for="YearsSinceLastPromotion">Years Since Last Promotion</label>
+                    <input type="number" name="YearsSinceLastPromotion" required>
+                </div>
+                <div class="form-group">
+                    <label for="YearsWithCurrManager">Years with Current Manager</label>
+                    <input type="number" name="YearsWithCurrManager" required>
+                </div>
+                <div class="form-group">
+                    <label for="Attrition">Attrition</label>
+                    <select name="Attrition" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Predict Performance</button>
+        </form>
+    </div>
 </body>
 </html>
