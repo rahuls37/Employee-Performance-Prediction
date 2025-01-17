@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction History</title>
+</head>
+<body>
+    <h1>Prediction History</h1>
+    <div>
+        {{ tables|safe }}
+    </div>
+    <a href="{{ url_for('index') }}">Go back</a>
+</body>
+</html>

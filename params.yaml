@@ -1,0 +1,4 @@
+model_trainer:
+  random_state: 42
+  test_size: 0.25
+  target_column: target

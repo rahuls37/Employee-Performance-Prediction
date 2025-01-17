@@ -1,0 +1,16 @@
+python-dotenv
+pandas
+numpy
+scikit-learn
+mlflow
+pyaml
+dagshub
+flask
+uvicorn
+python-multipart
+ensure
+python-box
+pyYAML
+
+
+##-e .

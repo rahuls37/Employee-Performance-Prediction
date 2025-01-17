@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction App</title>
+</head>
+<body>
+    <h1>Employee Performance Prediction</h1>
+    <form action="{{ url_for('predict') }}" method="post">
+        <!-- Add input fields for each feature required by the model -->
+        <label for="EmpNumber">EmpNumber:</label>
+        <input type="text" id="EmpNumber" name="EmpNumber"><br>
+        <label for="Age">Age:</label>
+        <input type="text" id="Age" name="Age"><br>
+        <label for="Gender">Gender:</label>
+        <input type="text" id="Gender" name="Gender"><br>
+        <label for="EducationBackground">EducationBackground:</label>
+        <input type="text" id="EducationBackground" name="EducationBackground"><br>
+        <label for="MaritalStatus">MaritalStatus:</label>
+        <input type="text" id="MaritalStatus" name="MaritalStatus"><br>
+        <label for="EmpDepartment">EmpDepartment:</label>
+        <input type="text" id="EmpDepartment" name="EmpDepartment"><br>
+        <label for="EmpJobRole">EmpJobRole:</label>
+        <input type="text" id="EmpJobRole" name="EmpJobRole"><br>
+        <label for="BusinessTravelFrequency">BusinessTravelFrequency:</label>
+        <input type="text" id="BusinessTravelFrequency" name="BusinessTravelFrequency"><br>
+        <label for="DistanceFromHome">DistanceFromHome:</label>
+        <input type="text" id="DistanceFromHome" name="DistanceFromHome"><br>
+        <label for="EmpEducationLevel">EmpEducationLevel:</label>
+        <input type="text" id="EmpEducationLevel" name="EmpEducationLevel"><br>
+        <label for="EmpEnvironmentSatisfaction">EmpEnvironmentSatisfaction:</label>
+        <input type="text" id="EmpEnvironmentSatisfaction" name="EmpEnvironmentSatisfaction"><br>
+        <label for="EmpHourlyRate">EmpHourlyRate:</label>
+        <input type="text" id="EmpHourlyRate" name="EmpHourlyRate"><br>
+        <label for="EmpJobInvolvement">EmpJobInvolvement:</label>
+        <input type="text" id="EmpJobInvolvement" name="EmpJobInvolvement"><br>
+        <label for="EmpJobLevel">EmpJobLevel:</label>
+        <input type="text" id="EmpJobLevel" name="EmpJobLevel"><br>
+        <label for="EmpJobSatisfaction">EmpJobSatisfaction:</label>
+        <input type="text" id="EmpJobSatisfaction" name="EmpJobSatisfaction"><br>
+        <label for="NumCompaniesWorked">NumCompaniesWorked:</label>
+        <input type="text" id="NumCompaniesWorked" name="NumCompaniesWorked"><br>
+        <label for="OverTime">OverTime:</label>
+        <input type="text" id="OverTime" name="OverTime"><br>
+        <label for="EmpLastSalaryHikePercent">EmpLastSalaryHikePercent:</label>
+        <input type="text" id="EmpLastSalaryHikePercent" name="EmpLastSalaryHikePercent"><br>
+        <label for="EmpRelationshipSatisfaction">EmpRelationshipSatisfaction:</label>
+        <input type="text" id="EmpRelationshipSatisfaction" name="EmpRelationshipSatisfaction"><br>
+        <label for="TotalWorkExperienceInYears">TotalWorkExperienceInYears:</label>
+        <input type="text" id="TotalWorkExperienceInYears" name="TotalWorkExperienceInYears"><br>
+        <label for="TrainingTimesLastYear">TrainingTimesLastYear:</label>
+        <input type="text" id="TrainingTimesLastYear" name="TrainingTimesLastYear"><br>
+        <label for="EmpWorkLifeBalance">EmpWorkLifeBalance:</label>
+        <input type="text" id="EmpWorkLifeBalance" name="EmpWorkLifeBalance"><br>
+        <label for="ExperienceYearsAtThisCompany">ExperienceYearsAtThisCompany:</label>
+        <input type="text" id="ExperienceYearsAtThisCompany" name="ExperienceYearsAtThisCompany"><br>
+        <label for="ExperienceYearsInCurrentRole">ExperienceYearsInCurrentRole:</label>
+        <input type="text" id="ExperienceYearsInCurrentRole" name="ExperienceYearsInCurrentRole"><br>
+        <label for="YearsSinceLastPromotion">YearsSinceLastPromotion:</label>
+        <input type="text" id="YearsSinceLastPromotion" name="YearsSinceLastPromotion"><br>
+        <label for="YearsWithCurrManager">YearsWithCurrManager:</label>
+        <input type="text" id="YearsWithCurrManager" name="YearsWithCurrManager"><br>
+        <label for="Attrition">Attrition:</label>
+        <input type="text" id="Attrition" name="Attrition"><br>
+        <label for="PerformanceRating">PerformanceRating:</label>
+        <input type="text" id="PerformanceRating" name="PerformanceRating"><br>
+        <input type="submit" value="Predict">
+    </form>
+    <a href="{{ url_for('history') }}">View Prediction History</a>
+</body>
+</html>
